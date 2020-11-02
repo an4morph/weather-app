@@ -8,6 +8,7 @@ import {
   GET_LATLON_BY_PLACEID_FAILED,
 
   SET_DISPLAYED_LOCATION,
+  SET_USER_LOCATION,
 } from './constants'
 import { getOpw, getGp } from './api'
 
@@ -42,5 +43,10 @@ export const getLatLonByPlaceId = (placeid) => (dispatch) => {
 
 export const setDisplayedLocation = (data) => ({
   type: SET_DISPLAYED_LOCATION,
+  data,
+})
+
+export const setUserLocation = (data) => ({
+  type: SET_USER_LOCATION,
   data,
 })

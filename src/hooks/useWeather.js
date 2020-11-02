@@ -4,12 +4,14 @@ import { getWeatherByLatLon } from '../store/actions'
 
 const useWeather = () => {
   const dispatch = useDispatch()
-  const { lat, lon } = useSelector((state) => state.weather.location)
+  const location = useSelector((state) => state.weather.location)
+  const userLocation = useSelector((state) => state.weather.userLocation)
   const weather = useSelector((state) => state.weather.data)
+  const currentLocation = location || userLocation
 
   useEffect(() => {
-    if (lat && lon) dispatch(getWeatherByLatLon(lat, lon))
-  }, [dispatch, lat, lon])
+    if (currentLocation) dispatch(getWeatherByLatLon(currentLocation.lat, currentLocation.lon))
+  }, [currentLocation, dispatch])
 
   const reqStatusGetWeather = useSelector(({ weather: { getWeather, getLatLon } }) => ({
     success: getWeather.success,

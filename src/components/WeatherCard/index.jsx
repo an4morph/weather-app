@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { array, bool, number, object, shape, string } from 'prop-types'
+import { bool, object, string } from 'prop-types'
 import { formatDt } from './utils'
 import Forecast from './Forecast'
 import { device } from '../../styles/devices'
@@ -61,14 +61,12 @@ const Overlay = styled.div`
 `
 
 function WeatherBanner({
-  data, loading, failed,
-  loadingText = 'Weather is loading...',
-  failedText = 'Error while loading weather data',
+  data, loading, failed, loadingText, failedText,
 }) {
   return (
     <Wrapper>
       {loading && <Overlay>{loadingText || 'Weather is loading...'}</Overlay>}
-      {failed && <Overlay error>{failedText}</Overlay>}
+      {failed && <Overlay error>{failedText || 'Error while loading weather data'}</Overlay>}
       <CityName>{data ? data.name : 'City'}</CityName>
       <Today>{formatDt(data ? data.dt : new Date().getTime(), '%d %M %Y')}</Today>
       <Body>

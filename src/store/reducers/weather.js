@@ -8,14 +8,13 @@ import {
   GET_LATLON_BY_PLACEID_FAILED,
 
   SET_DISPLAYED_LOCATION,
+  SET_USER_LOCATION,
 } from '../constants'
 import stateCreator from '../../services/stateCreator'
 
 const initialState = {
-  location: {
-    lat: null,
-    lon: null,
-  },
+  location: null,
+  userLocation: null,
   data: null,
   getWeather: {
     success: false,
@@ -69,6 +68,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         location: action.data,
+      }
+    case SET_USER_LOCATION:
+      return {
+        ...state,
+        userLocation: action.data,
       }
     default: return state
   }
