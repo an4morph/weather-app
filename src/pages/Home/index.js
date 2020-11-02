@@ -6,16 +6,15 @@ import HomePageDumb from './Dumb'
 
 const useHomePage = (props) => {
   const dispatch = useDispatch()
-  const location = useSelector((state) => state.weather.location)
+  const { lat, lon } = useSelector((state) => state.weather.location)
   const reqStatusGetWeather = useSelector((state) => state.weather.getWeather)
   const weather = useSelector((state) => state.weather.data)
 
   const { latitude, longitude, error: locationError } = usePosition()
 
   useEffect(() => {
-    const { lat, lon } = location
     if (lat && lon) dispatch(getWeatherByLatLon(lat, lon))
-  }, [dispatch, location])
+  }, [dispatch, lat, lon])
 
   useEffect(() => {
     if (!locationError && latitude) {
@@ -25,6 +24,8 @@ const useHomePage = (props) => {
 
   return {
     weather,
+    locationError,
+    locationSuccess: Boolean(lat && lon),
     ...reqStatusGetWeather,
     ...props,
   }
