@@ -20,6 +20,7 @@ const Container = styled.div`
   box-sizing: border-box;
   max-width: 320px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+  z-index: 102;
 `
 const Title = styled.h2`
   font-size: 20px;
@@ -30,20 +31,31 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
 `
+const Overlay = styled.div`
+  background-color: #00000010;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 101;
+  top: 0;
+`
 
 function Sidebar({ isOpen, onCloseBtnClick }) {
   return (
-    <Container isOpen={isOpen}>
-      <Header>
-        <Title>Favorite cities</Title>
-        <Button
-          onClick={onCloseBtnClick}
-        ><CloseIcon />
-        </Button>
-      </Header>
+    <>
+      <Container isOpen={isOpen}>
+        <Header>
+          <Title>Favorite cities</Title>
+          <Button
+            onClick={onCloseBtnClick}
+          ><CloseIcon />
+          </Button>
+        </Header>
 
-      <FavoriteCitiesList closeSidebar={onCloseBtnClick} />
-    </Container>
+        <FavoriteCitiesList closeSidebar={onCloseBtnClick} />
+      </Container>
+      {isOpen && <Overlay onClick={onCloseBtnClick} />}
+    </>
   )
 }
 

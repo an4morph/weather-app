@@ -13,6 +13,7 @@ const StyledHeader = styled.header`
 `
 const Logo = styled.h1`
   margin: 0;
+  font-size: 20px;
 `
 const Heart = styled(HeartIcon)`
   margin-right: 10px;

@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
-import { func } from 'prop-types'
+import { array, func } from 'prop-types'
 import Button from '../Button'
-import { setDisplayedLocation } from '../../store/actions'
 
 const Empty = styled.div`
   color: #777;
@@ -17,9 +15,7 @@ const CityButton = styled(Button)`
   margin-bottom: 10px;
 `
 
-function FavoriteCitiesList({ closeSidebar }) {
-  const list = useSelector((state) => state.weather.favs)
-  const dispatch = useDispatch()
+function FavoriteCitiesList({ list, onCityClick }) {
   return (
     <List>
       {!list.length && <Empty>List is empty</Empty>}
@@ -27,10 +23,7 @@ function FavoriteCitiesList({ closeSidebar }) {
         list.map((item) => (
           <li key={item.id}>
             <CityButton
-              onClick={() => {
-                dispatch(setDisplayedLocation(item.coord))
-                closeSidebar()
-              }}
+              onClick={() => onCityClick(item)}
             >
               {item.name}
             </CityButton>
@@ -41,7 +34,8 @@ function FavoriteCitiesList({ closeSidebar }) {
   )
 }
 FavoriteCitiesList.propTypes = {
-  closeSidebar: func.isRequired,
+  onCityClick: func.isRequired,
+  list: array,
 }
 
 export default FavoriteCitiesList
