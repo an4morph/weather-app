@@ -14,11 +14,13 @@ function HomePageDumb({
       { locationError && <div>{locationError}</div> }
       { !locationError && !locationSuccess && 'Loading geodata...' }
       { locationSuccess && (
-        <div>
-          {success && <WeatherCard data={weather} />}
-          {loading && 'Loading weather...'}
-          {failed && <div>There was an error loading weather</div>}
-        </div>
+        <WeatherCard {...{
+          loading,
+          failed,
+          success,
+          data: weather,
+        }}
+        />
       )}
     </PageTemplate>
   )

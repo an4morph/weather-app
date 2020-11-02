@@ -6,7 +6,6 @@ import Sidebar from '../Sidebar'
 import { device } from '../../styles/devices'
 
 const Container = styled.div`
-  width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;

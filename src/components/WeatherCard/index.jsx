@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { array, object, shape, string } from 'prop-types'
+import { array, bool, number, object, shape, string } from 'prop-types'
 import { formatDt } from './utils'
 import Forecast from './Forecast'
 import { device } from '../../styles/devices'
@@ -12,6 +12,8 @@ const Wrapper = styled.div`
   padding: 20px;
   box-sizing: border-box;
   margin-top: 20px;
+  background-color: #fff;
+  position: relative;
 `
 const CityName = styled.h2`
   margin: 0 0 5px 0;
@@ -44,21 +46,38 @@ const Body = styled.div`
     flex-direction: row;
   }
 `
+const Overlay = styled.div`
+  position: absolute;
+  background-color: ${({ error }) => (error ? '#ffd2d2cc' : '#ffffffaa')};
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  padding: 30px;
+  box-sizing: border-box;
+`
 
-function WeatherBanner({ data }) {
+function WeatherBanner({
+  data, loading, failed,
+}) {
   return (
     <Wrapper>
-      <CityName>{data.name}</CityName>
-      <Today>{formatDt(data.dt, '%d %M %Y')}</Today>
+      {loading && <Overlay>Weather is loading...</Overlay>}
+      {failed && <Overlay error>Error while loading weather data</Overlay>}
+      <CityName>{data ? data.name : 'City'}</CityName>
+      <Today>{formatDt(data ? data.dt : new Date().getTime(), '%d %M %Y')}</Today>
       <Body>
         <div>
-          <WeatherDesc>{data.weather.map((w) => w.main).join(', ')}</WeatherDesc>
-          <div>Wind {data.wind.speed} m/s</div>
-          <div>Humidity {data.main.humidity}%</div>
-          <Temperature>{Math.round(data.main.temp)}°</Temperature>
+          <WeatherDesc>{data ? data.weather.map((w) => w.main).join(', ') : []}</WeatherDesc>
+          <div>Wind {data ? data.wind.speed : 0} m/s</div>
+          <div>Humidity {data ? data.main.humidity : 0}%</div>
+          <Temperature>{Math.round(data ? data.main.temp : 0)}°</Temperature>
         </div>
 
-        <Forecast list={data.forecast} />
+        <Forecast list={data ? data.forecast : []} />
       </Body>
 
     </Wrapper>
@@ -66,13 +85,9 @@ function WeatherBanner({ data }) {
 }
 
 WeatherBanner.propTypes = {
-  data: shape({
-    name: string,
-    weather: array,
-    main: object,
-    wind: object,
-    forecast: array,
-  }),
+  data: object,
+  loading: bool,
+  failed: bool,
 }
 
 export default WeatherBanner

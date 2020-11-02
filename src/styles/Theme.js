@@ -6,7 +6,7 @@ import GlobalStyle from './global'
 const theme = {
   colors: {
     error: '#C14A4A',
-    bg: '#FFFFFF',
+    bg: '#f7f7f7',
     primary: '#31ad77',
     text: '#2F2C2B',
     link: '#3a66c7',
