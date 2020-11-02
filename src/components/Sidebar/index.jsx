@@ -19,7 +19,6 @@ const Container = styled.div`
   padding: 20px;
   box-sizing: border-box;
   max-width: 320px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
   z-index: 102;
 `
 const Title = styled.h2`
