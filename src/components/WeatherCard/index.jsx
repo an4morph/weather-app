@@ -1,45 +1,67 @@
 import React from 'react'
+import styled from 'styled-components'
 import { array, object, shape, string } from 'prop-types'
-import DateTime from 'datetime-js'
+import { formatDt } from './utils'
+import Forecast from './Forecast'
+import { device } from '../../styles/devices'
 
-const formatDt = (timestamp, formatStr) => DateTime(new Date(timestamp * 1000), formatStr)
-const filterByHours = (list, hours) => list.filter((item) => hours.includes(formatDt(item.dt, '%H')))
+const Wrapper = styled.div`
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
+`
+const CityName = styled.h2`
+  margin: 0 0 5px 0;
+  font-weight: 700;
+`
+const WeatherDesc = styled.h3`
+  margin: 0 0 15px 0;
+  font-weight: 700;
+  text-transform: lowercase;
+  &::first-letter {
+    text-transform: uppercase;
+  }
+`
+const Temperature = styled.h3`
+  margin: 15px 0 20px 0;
+  font-size: 22px;
+  @media ${device.sm} {
+    margin: 15px 0 0 0;
+  }
+`
+const Today = styled.div`
+  margin: 0 0 20px 0;
+  color: #777;
+`
+const Body = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  @media ${device.sm} {
+    flex-direction: row;
+  }
+`
 
 function WeatherBanner({ data }) {
   return (
-    <div>
-      <h2>{data.name}</h2>
-      <h3>{data.weather.map((w) => w.main).join(', ')}</h3>
-      <div>Wind {data.wind.speed} m/s</div>
-      <div>Humidity {data.main.humidity}%</div>
-      <h1>{data.main.temp}°</h1>
+    <Wrapper>
+      <CityName>{data.name}</CityName>
+      <Today>{formatDt(data.dt, '%d %M %Y')}</Today>
+      <Body>
+        <div>
+          <WeatherDesc>{data.weather.map((w) => w.main).join(', ')}</WeatherDesc>
+          <div>Wind {data.wind.speed} m/s</div>
+          <div>Humidity {data.main.humidity}%</div>
+          <Temperature>{Math.round(data.main.temp)}°</Temperature>
+        </div>
 
-      <table>
-        <thead>
-          <tr>
-            {filterByHours(data.forecast, ['12'])
-              .map((item) => (
-                <th key={item.dt_txt}>{formatDt(item.dt, '%D:s')}</th>
-              ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {filterByHours(data.forecast, ['12'])
-              .map((item) => (
-                <td key={item.dt_txt}>{Math.round(item.main.temp)}°</td>
-              ))}
-          </tr>
-          <tr>
-            {filterByHours(data.forecast, ['00'])
-              .map((item) => (
-                <td key={item.dt_txt}>{Math.round(item.main.temp)}°</td>
-              ))}
-          </tr>
-        </tbody>
+        <Forecast list={data.forecast} />
+      </Body>
 
-      </table>
-    </div>
+    </Wrapper>
   )
 }
 

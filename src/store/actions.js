@@ -29,7 +29,7 @@ export const getWeatherByLatLon = (lat, lon) => (dispatch) => {
 
 export const getLatLonByPlaceId = (placeid) => (dispatch) => {
   dispatch({ type: GET_LATLON_BY_PLACEID_LOADING })
-  getGp('/details/jsons', { params: { placeid } })
+  getGp('/details/json', { params: { placeid } })
     .then(({ data }) => {
       const { lat, lng: lon } = data.result.geometry.location
       dispatch({ type: GET_LATLON_BY_PLACEID_SUCCESS })

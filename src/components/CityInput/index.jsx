@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { bool, object, string } from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { getLatLonByPlaceId } from '../../store/actions'
+
+const Wrapper = styled.div`
+  margin-top: 20px;
+`
 
 function CityInput() {
   const [value, setValue] = useState('')
@@ -12,17 +16,16 @@ function CityInput() {
     setValue(val)
   }
   return (
-    <GooglePlacesAutocomplete
-      apiKey={process.env.REACT_APP_GP_API_KEY}
-      selectProps={{
-        value,
-        onChange,
-      }}
-    />
+    <Wrapper>
+      <GooglePlacesAutocomplete
+        apiKey={process.env.REACT_APP_GP_API_KEY}
+        selectProps={{
+          value,
+          onChange,
+        }}
+      />
+    </Wrapper>
   )
-}
-CityInput.propTypes = {
-
 }
 
 export default CityInput

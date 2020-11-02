@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
-import Theme from './Theme'
+import Theme from './styles/Theme'
 
 function App() {
   return (
