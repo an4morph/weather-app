@@ -1,36 +1,19 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { usePosition } from 'use-position'
-import { getWeatherByLatLon, setDisplayedLocation } from '../../store/actions'
+import React from 'react'
+import useGeoLocation from '../../hooks/useGeoLocation'
+import useWeather from '../../hooks/useWeather'
 import HomePageDumb from './Dumb'
 
 const useHomePage = (props) => {
-  const dispatch = useDispatch()
-  const { lat, lon } = useSelector((state) => state.weather.location)
-  const reqStatusGetWeather = useSelector(({ weather: { getWeather, getLatLon } }) => ({
-    success: getWeather.success,
-    loading: getWeather.loading || getLatLon.loading,
-    failed: getWeather.failed || getLatLon.failed,
-  }))
-  const weather = useSelector((state) => state.weather.data)
-
-  const { latitude, longitude, error: locationError } = usePosition()
-
-  useEffect(() => {
-    if (lat && lon) dispatch(getWeatherByLatLon(lat, lon))
-  }, [dispatch, lat, lon])
-
-  useEffect(() => {
-    if (!locationError && latitude) {
-      dispatch(setDisplayedLocation({ lat: latitude, lon: longitude }))
-    }
-  }, [dispatch, latitude, locationError, longitude])
+  const { weather, success, loading, failed } = useWeather()
+  const geo = useGeoLocation()
 
   return {
     weather,
-    locationError,
-    locationSuccess: Boolean(lat && lon),
-    ...reqStatusGetWeather,
+    locationError: geo.error,
+    loadingText: geo.loading ? 'Loading your current location...' : '',
+    success,
+    loading: loading || geo.loading,
+    failed: failed || geo.failed,
     ...props,
   }
 }
