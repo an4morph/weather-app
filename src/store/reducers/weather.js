@@ -2,10 +2,16 @@ import {
   GET_WEATHER_SUCCESS,
   GET_WEATHER_LOADING,
   GET_WEATHER_FAILED,
+
+  SET_DISPLAYED_LOCATION,
 } from '../constants'
 import stateCreator from '../../services/stateCreator'
 
 const initialState = {
+  location: {
+    lat: null,
+    lon: null,
+  },
   data: null,
   getWeather: {
     success: false,
@@ -32,6 +38,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         getWeather: stateCreator('failed', action.error),
+      }
+    case SET_DISPLAYED_LOCATION:
+      return {
+        ...state,
+        location: action.data,
       }
     default: return state
   }
