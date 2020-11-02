@@ -7,7 +7,11 @@ import HomePageDumb from './Dumb'
 const useHomePage = (props) => {
   const dispatch = useDispatch()
   const { lat, lon } = useSelector((state) => state.weather.location)
-  const reqStatusGetWeather = useSelector((state) => state.weather.getWeather)
+  const reqStatusGetWeather = useSelector(({ weather: { getWeather, getLatLon } }) => ({
+    success: getWeather.success,
+    loading: getWeather.loading || getLatLon.loading,
+    failed: getWeather.failed || getLatLon.failed,
+  }))
   const weather = useSelector((state) => state.weather.data)
 
   const { latitude, longitude, error: locationError } = usePosition()

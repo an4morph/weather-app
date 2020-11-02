@@ -3,6 +3,10 @@ import {
   GET_WEATHER_LOADING,
   GET_WEATHER_FAILED,
 
+  GET_LATLON_BY_PLACEID_SUCCESS,
+  GET_LATLON_BY_PLACEID_LOADING,
+  GET_LATLON_BY_PLACEID_FAILED,
+
   SET_DISPLAYED_LOCATION,
 } from '../constants'
 import stateCreator from '../../services/stateCreator'
@@ -14,6 +18,12 @@ const initialState = {
   },
   data: null,
   getWeather: {
+    success: false,
+    loading: false,
+    failed: false,
+    error: '',
+  },
+  getLatLon: {
     success: false,
     loading: false,
     failed: false,
@@ -38,6 +48,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         getWeather: stateCreator('failed', action.error),
+      }
+
+    case GET_LATLON_BY_PLACEID_SUCCESS:
+      return {
+        ...state,
+        getLatLon: stateCreator('success'),
+      }
+    case GET_LATLON_BY_PLACEID_LOADING:
+      return {
+        ...state,
+        getLatLon: stateCreator('loading'),
+      }
+    case GET_LATLON_BY_PLACEID_FAILED:
+      return {
+        ...state,
+        getLatLon: stateCreator('failed', action.error),
       }
     case SET_DISPLAYED_LOCATION:
       return {
