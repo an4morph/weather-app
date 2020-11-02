@@ -2,6 +2,7 @@ import React from 'react'
 import { bool, func } from 'prop-types'
 import styled from 'styled-components'
 import Button from '../Button'
+import FavoriteCitiesList from '../FavoriteCities'
 
 const Container = styled.div`
   width: 100%;
@@ -24,6 +25,7 @@ function Sidebar({ isOpen, onCloseBtnClick }) {
         onClick={onCloseBtnClick}
       >close
       </Button>
+      <FavoriteCitiesList />
     </Container>
   )
 }

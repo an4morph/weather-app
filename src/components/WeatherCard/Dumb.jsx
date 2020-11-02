@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { bool, object, string } from 'prop-types'
+import { bool, func, object, string } from 'prop-types'
 import { formatDt } from './utils'
 import Forecast from './Forecast'
 import StatusOverlay from './StatusOverlay'
+import Button from '../Button'
+import HeartIcon from '../Icons/Heart'
 import { device } from '../../styles/devices'
 
 const Wrapper = styled.div`
@@ -47,15 +49,31 @@ const Body = styled.div`
     flex-direction: row;
   }
 `
+const Heart = styled(HeartIcon)`
+  color: ${({ $fav }) => ($fav ? 'red' : '#000')};
+`
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+`
 
 function WeatherBanner({
-  data, loading, failed, loadingText, failedText,
+  data, loading, failed, loadingText, failedText, toggleFavs, isFav,
 }) {
   return (
     <Wrapper>
       <StatusOverlay {...{ loading, failed, loadingText, failedText }} />
 
-      <CityName>{data ? data.name : 'City'}</CityName>
+      <Title>
+        <CityName>{data ? data.name : 'City'}</CityName>
+        <Button
+          onClick={toggleFavs}
+        >
+          <Heart $fav={isFav} />
+        </Button>
+      </Title>
+
       <Today>{formatDt(data ? data.dt : new Date().getTime(), '%d %M %Y')}</Today>
 
       <Body>
@@ -79,6 +97,8 @@ WeatherBanner.propTypes = {
   failed: bool,
   loadingText: string,
   failedText: string,
+  toggleFavs: func,
+  isFav: bool,
 }
 
 export default WeatherBanner

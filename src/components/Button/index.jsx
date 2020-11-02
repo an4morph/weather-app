@@ -4,15 +4,18 @@ import styled from 'styled-components'
 
 const PrimaryButton = styled.button`
   height: ${({ theme }) => theme.sizes.buttonHeight};
-  background-color: #444;
-  color: #fff;
+  background-color: #ddd;
   transition: all 0.4s;
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
-    background-color: #555;
+    background-color: #ccc;
     transition: all ${({ theme }) => theme.others.transitionMs};;
   }
   &:active {

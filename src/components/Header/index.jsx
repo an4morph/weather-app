@@ -2,20 +2,31 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Button from '../Button'
+import HeartIcon from '../Icons/Heart'
 
 const StyledHeader = styled.header`
-  background-color: #888;
   padding: 0 15px;
-  height: 70px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+const Logo = styled.h1`
+  margin: 0;
+`
+const Heart = styled(HeartIcon)`
+  margin-right: 10px;
 `
 
 function Header({ onMenuBtnClick }) {
   return (
     <StyledHeader>
-      header
+      <Logo>Weather App</Logo>
       <Button
         onClick={onMenuBtnClick}
-      >sidebar btn
+      >
+        <Heart />
+        <span>Favorites</span>
       </Button>
     </StyledHeader>
   )

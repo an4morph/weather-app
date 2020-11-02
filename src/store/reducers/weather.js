@@ -9,10 +9,14 @@ import {
 
   SET_DISPLAYED_LOCATION,
   SET_USER_LOCATION,
+
+  ADD_CITY_TO_FAVORITES,
+  REMOVE_CITY_FROM_FAVORITES,
 } from '../constants'
 import stateCreator from '../../services/stateCreator'
 
 const initialState = {
+  favs: [],
   location: null,
   userLocation: null,
   data: null,
@@ -73,6 +77,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userLocation: action.data,
+      }
+    case ADD_CITY_TO_FAVORITES:
+      return {
+        ...state,
+        favs: [...state.favs, action.city],
+      }
+    case REMOVE_CITY_FROM_FAVORITES:
+      return {
+        ...state,
+        favs: state.favs.filter((item) => item.id !== action.id),
       }
     default: return state
   }

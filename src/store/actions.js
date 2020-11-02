@@ -9,6 +9,9 @@ import {
 
   SET_DISPLAYED_LOCATION,
   SET_USER_LOCATION,
+
+  ADD_CITY_TO_FAVORITES,
+  REMOVE_CITY_FROM_FAVORITES,
 } from './constants'
 import { getOpw, getGp } from './api'
 
@@ -49,4 +52,14 @@ export const setDisplayedLocation = (data) => ({
 export const setUserLocation = (data) => ({
   type: SET_USER_LOCATION,
   data,
+})
+
+export const addCityToFavorites = (city) => ({
+  type: ADD_CITY_TO_FAVORITES,
+  city,
+})
+
+export const removeCityFromFavorites = (id) => ({
+  type: REMOVE_CITY_FROM_FAVORITES,
+  id,
 })
