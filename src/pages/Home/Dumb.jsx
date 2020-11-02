@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { bool, object, string } from 'prop-types'
 
 import PageTemplate from '../../components/PageTemplate'

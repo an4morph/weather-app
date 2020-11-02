@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'query-string'
 
 const OPW_ENDPOINT = 'https://api.openweathermap.org/data/2.5'
-const OPW_API_KEY = 'api_key'
+const OPW_API_KEY = process.env.REACT_APP_OPW_API_KEY
 
 export const createUrl = (endpoint, route, prms = null) => {
   const params = prms ? `?${qs.stringify(prms)}` : ''
