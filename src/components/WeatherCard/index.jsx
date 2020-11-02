@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { bool, object, string } from 'prop-types'
 import { formatDt } from './utils'
 import Forecast from './Forecast'
+import StatusOverlay from './StatusOverlay'
 import { device } from '../../styles/devices'
 
 const Wrapper = styled.div`
@@ -46,29 +47,17 @@ const Body = styled.div`
     flex-direction: row;
   }
 `
-const Overlay = styled.div`
-  position: absolute;
-  background-color: ${({ error }) => (error ? '#ffd2d2cc' : '#ffffffaa')};
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  padding: 30px;
-  box-sizing: border-box;
-`
 
 function WeatherBanner({
   data, loading, failed, loadingText, failedText,
 }) {
   return (
     <Wrapper>
-      {loading && <Overlay>{loadingText || 'Weather is loading...'}</Overlay>}
-      {failed && <Overlay error>{failedText || 'Error while loading weather data'}</Overlay>}
+      <StatusOverlay {...{ loading, failed, loadingText, failedText }} />
+
       <CityName>{data ? data.name : 'City'}</CityName>
       <Today>{formatDt(data ? data.dt : new Date().getTime(), '%d %M %Y')}</Today>
+
       <Body>
         <div>
           <WeatherDesc>{data ? data.weather.map((w) => w.main).join(', ') : []}</WeatherDesc>
