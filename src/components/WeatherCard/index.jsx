@@ -62,11 +62,13 @@ const Overlay = styled.div`
 
 function WeatherBanner({
   data, loading, failed,
+  loadingText = 'Weather is loading...',
+  failedText = 'Error while loading weather data',
 }) {
   return (
     <Wrapper>
-      {loading && <Overlay>Weather is loading...</Overlay>}
-      {failed && <Overlay error>Error while loading weather data</Overlay>}
+      {loading && <Overlay>{loadingText || 'Weather is loading...'}</Overlay>}
+      {failed && <Overlay error>{failedText}</Overlay>}
       <CityName>{data ? data.name : 'City'}</CityName>
       <Today>{formatDt(data ? data.dt : new Date().getTime(), '%d %M %Y')}</Today>
       <Body>
@@ -88,6 +90,8 @@ WeatherBanner.propTypes = {
   data: object,
   loading: bool,
   failed: bool,
+  loadingText: string,
+  failedText: string,
 }
 
 export default WeatherBanner

@@ -8,20 +8,19 @@ import CityInput from '../../components/CityInput'
 function HomePageDumb({
   weather, success, failed, loading, locationError, locationSuccess,
 }) {
+  const locationLoading = !locationError && !locationSuccess
+  const locationFailed = !!locationError && !success && !loading
   return (
     <PageTemplate>
       <CityInput />
-      { locationError && <div>{locationError}</div> }
-      { !locationError && !locationSuccess && 'Loading geodata...' }
-      { locationSuccess && (
-        <WeatherCard {...{
-          loading,
-          failed,
-          success,
-          data: weather,
-        }}
-        />
-      )}
+      <WeatherCard
+        loading={loading || locationLoading}
+        loadingText={locationLoading ? 'Loading your current location...' : ''}
+        failed={failed || locationFailed}
+        failedText={locationError}
+        success={success}
+        data={weather}
+      />
     </PageTemplate>
   )
 }
