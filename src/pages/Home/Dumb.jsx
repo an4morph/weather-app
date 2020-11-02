@@ -8,7 +8,7 @@ function HomePageDumb({ weather, success, failed, error, loading }) {
   return (
     <PageTemplate>
       <div>
-        {success && <WeatherCard current={weather} />}
+        {success && <WeatherCard data={weather} />}
         {loading && 'Loading weather...'}
         {failed && error}
       </div>

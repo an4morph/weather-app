@@ -9,8 +9,13 @@ import { getOpw } from './api'
 
 export const getWeatherByLatLon = (lat, lon) => (dispatch) => {
   dispatch({ type: GET_WEATHER_LOADING })
-  getOpw('/weather', { params: { lat, lon, units: 'metric' } })
-    .then(({ data }) => {
+  const params = { lat, lon, units: 'metric' }
+  Promise.all([
+    getOpw('/weather', { params }),
+    getOpw('/forecast', { params }),
+  ])
+    .then(([weather, forecast]) => {
+      const data = { ...weather.data, forecast: forecast.data.list }
       dispatch({ type: GET_WEATHER_SUCCESS, data })
     })
     .catch((err) => {
