@@ -14,9 +14,10 @@ import {
   REMOVE_CITY_FROM_FAVORITES,
 } from '../constants'
 import stateCreator from '../../services/stateCreator'
+import { loadState } from '../../services/localStorage'
 
 const initialState = {
-  favs: [],
+  favs: loadState() || [],
   location: null,
   userLocation: null,
   data: null,
